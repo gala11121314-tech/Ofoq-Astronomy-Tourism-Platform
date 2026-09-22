@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - إدارة الموارد البشرية | إمارة منطقة المدينة المنورة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-emerald: #0b3b24;
+            --primary-light: #135837;
+            --accent-gold: #c5a059;
+            --bg-light: #f4f7f5;
+            --text-main: #1f2d27;
+            --text-muted: #64746d;
+            --card-shadow: 0 15px 30px rgba(11, 59, 36, 0.06);
+            --danger-red: #c0392b;
+            --success-green: #27ae60;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            background-image: radial-gradient(circle at 50% 0%, rgba(197, 160, 89, 0.08) 0%, transparent 50%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: var(--text-main);
+        }
+
+        .gov-top-bar {
+            background: var(--primary-emerald);
+            color: rgba(255, 255, 255, 0.9);
+            padding: 8px 60px;
+            font-size: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+        }
+.main-header {
+    background: #ffffff;
+    padding: 20px 60px; /* زلناها من 0 إلى 20px من فوق ومن تحت، وصارت مبحبحة */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+    position: relative;
+    /* height: 110px; */ /* لو تبغى تثبت ارتفاع محدد وواسع شيل علامة التعليق من هنا */
+}
+
+        .main-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-emerald), var(--accent-gold), var(--primary-emerald));
+        }
+
+        .brand-text h1 {
+            font-size: 18px;
+            font-weight: 900;
+            color: var(--primary-emerald);
+            padding-top: 15px;
+        }
+
+        .brand-text p {
+            font-size: 12px;
+            color: var(--text-muted);
+            padding-bottom: 15px;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 5px;
+            list-style: none;
+        }
+
+        .nav-item {
+            padding: 22px 14px;
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.25s ease;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            color: var(--primary-emerald);
+            border-bottom-color: var(--accent-gold);
+            background: #f8faf9;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 20px;
+            flex-grow: 1;
+            width: 100%;
+        }
+
+        .page-section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid #e2e9e5;
+            margin-bottom: 25px;
+        }
+
+        .card-title {
+            color: var(--primary-emerald);
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary-emerald);
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            padding: 10px 12px;
+            border: 1.5px solid #c2d1c8;
+            border-radius: 8px;
+            font-size: 13.5px;
+            outline: none;
+            background: #ffffff;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: var(--primary-light);
+        }
+
+        .form-group input[readonly] {
+            background-color: #f1f5f3;
+            color: #555;
+            cursor: not-allowed;
+        }
+
+        .btn-prime {
+            background: var(--primary-emerald);
+            color: white;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 8px;
+            font-size: 13.5px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-prime:hover {
+            background: var(--primary-light);
+        }
+
+        .btn-danger {
+            background: var(--danger-red);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-danger:hover {
+            opacity: 0.9;
+        }
+
+        .btn-approve {
+            background: var(--success-green);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .custom-table th, .custom-table td {
+            border: 1px solid #dce5e0;
+            padding: 12px 14px;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .custom-table th {
+            background: var(--primary-emerald);
+            color: white;
+            font-weight: 700;
+        }
+
+        .custom-table tr:nth-child(even) {
+            background: #f9fbf9;
+        }
+
+        .badge {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11.5px;
+            font-weight: 700;
+            display: inline-block;
+        }
+        .badge-pending { background: #fff3cd; color: #856404; }
+        .badge-assigned { background: #d1ecf1; color: #0c5460; }
+        .badge-rejected { background: #f8d7da; color: #721c24; }
+        .badge-active { background: #d4edda; color: #155724; }
+
+        .action-flex {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .main-footer {
+            background: #ffffff;
+            border-top: 1px solid #e3eae6;
+            padding: 15px 60px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 12.5px;
+            color: var(--text-muted);
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="gov-top-bar">
+        <div>المملكة العربية السعودية</div>
+        <div>إدارة الموارد البشرية</div>
+    </div>
+
+    <header class="main-header">
+        <div class="brand-text">
+            <h1>إمارة منطقة المدينة المنورة</h1>
+        </div>
+
+        <nav>
+            <ul class="nav-menu">
+                <li class="nav-item" onclick="showTab('opps-tab', this)">إدارة الفرص والإعلانات</li>
+                <li class="nav-item active" onclick="showTab('requests-tab', this)">طلبات التدريب والتوجيه</li>
+                <li class="nav-item" onclick="showTab('depts-tab', this)">إدارات التدريب</li>
+                <!-- زر تسجيل الخروج الأنيق -->
+<button onclick="logout()" class="logout-btn">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 6px;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+    تسجيل الخروج
+</button>
+
+<style>
+    .logout-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #ffffff;
+        color: #c0392b;
+        border: 1.5px solid #fadbd8;
+        padding: 8px 16px;
+        border-radius: 10px;
+        font-family: 'Tajawal', sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+    }
+
+    .logout-btn:hover {
+        background-color: #fdf2f2;
+        border-color: #e74c3c;
+        color: #962d22;
+        box-shadow: 0 4px 12px rgba(231, 76, 60, 0.15);
+        transform: translateY(-1px);
+    }
+</style>
+
+<script>
+    function logout() {
+        localStorage.clear();
+        sessionStorage.clear();
+    window.location.href = 'log.html';
+    }
+</script>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+
+        <!-- 1. إدارة الفرص والإعلانات -->
+        <section id="opps-tab" class="page-section">
+            <div class="section-card">
+                <div class="card-title">إضافة فرصة تدريبية</div>
+                <form onsubmit="event.preventDefault(); addOpportunity();">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>اسم الفرصة</label>
+                            <input type="text" id="opp-title" value="تدريب تعاوني" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>التخصص المطلوب</label>
+                            <input type="text" id="opp-major" placeholder="مثال: نظم المعلومات الإدارية" required>
+                        </div>
+                        <div class="form-group">
+                            <label>عدد المقاعد</label>
+                            <input type="number" id="opp-seats" min="1" placeholder="مثال: 5" required>
+                        </div>
+                        <div class="form-group">
+                            <label>تاريخ بداية التدريب</label>
+                            <input type="date" id="opp-date" required>
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 15px;">
+                        <label>نص الإعلان الخاص بالفرصة</label>
+                        <textarea id="opp-announcement" rows="2" placeholder="تفاصيل الإعلان ليتم عرضه للمتقدمين..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn-prime">نشر الفرصة والإعلان</button>
+                </form>
+            </div>
+
+            <div class="section-card">
+                <div class="card-title">الفرص التدريبية المتاحة حالياً</div>
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>الفرصة</th>
+                            <th>التخصص</th>
+                            <th>المقاعد</th>
+                            <th>تاريخ البدء</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="opps-table-body">
+                        <tr>
+                            <td>1</td>
+                            <td>تدريب تعاوني</td>
+                            <td>تقنية المعلومات</td>
+                            <td>4</td>
+                            <td>2026-09-01</td>
+                            <td><button class="btn-danger" onclick="deleteRow(this)">إلغاء الفرصة</button></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>تدريب تعاوني</td>
+                            <td>نظم المعلومات الإدارية</td>
+                            <td>3</td>
+                            <td>2026-09-01</td>
+                            <td><button class="btn-danger" onclick="deleteRow(this)">إلغاء الفرصة</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 2. توجيه الطلبات للقطاعات -->
+        <section id="requests-tab" class="page-section active">
+            <div class="section-card">
+                <div class="card-title">طلبات التدريب الواردة ومعالجتها</div>
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>رقم الطلب</th>
+                            <th>الأسم</th>
+                            <th>التخصص</th>
+                            <th>الجامعة</th>
+                            <th>الحالة</th>
+                            <th>الإجراء</th>
+                        </tr>
+                    </thead>
+                    <tbody id="requests-table-body">
+                        <tr>
+                            <td>#1001</td>
+                            <td>غلا الرحيلي</td>
+                            <td>نظم المعلومات الإدارية</td>
+                            <td>جامعة طيبة</td>
+                            <td><span class="badge badge-pending">قيد المراجعة</span></td>
+                            <td>
+                                <div class="action-flex">
+                                    <select class="dept-select">
+                                        <option value="">اختر الإدارة للتوجيه...</option>
+                                        <option>تقنية المعلومات</option>
+                                        <option>الإدارة المالية</option>
+                                        <option>إدارة الموارد البشرية</option>
+                                    </select>
+                                    <button class="btn-approve" onclick="assignDept(this)">توجيه</button>
+                                    <button class="btn-danger" onclick="rejectRequest(this)">رفض</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#1002</td>
+                            <td>ترف العوفي</td>
+                            <td>محاسبة</td>
+                            <td>جامعة طيبة</td>
+                            <td><span class="badge badge-pending">قيد المراجعة</span></td>
+                            <td>
+                                <div class="action-flex">
+                                    <select class="dept-select">
+                                        <option value="">اختر الإدارة للتوجيه...</option>
+                                        <option>تقنية المعلومات</option>
+                                        <option>الإدارة المالية</option>
+                                        <option>إدارة الموارد البشرية</option>
+                                    </select>
+                                    <button class="btn-approve" onclick="assignDept(this)">توجيه</button>
+                                    <button class="btn-danger" onclick="rejectRequest(this)">رفض</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#1003</td>
+                            <td>هند العتيبي</td>
+                            <td>أمن سيبراني</td>
+                            <td>جامعة طيبة</td>
+                            <td><span class="badge badge-pending">قيد المراجعة</span></td>
+                            <td>
+                                <div class="action-flex">
+                                    <select class="dept-select">
+                                        <option value="">اختر الإدارة للتوجيه...</option>
+                                        <option>تقنية المعلومات</option>
+                                        <option>الإدارة المالية</option>
+                                        <option>إدارة الموارد البشرية</option>
+                                    </select>
+                                    <button class="btn-approve" onclick="assignDept(this)">توجيه</button>
+                                    <button class="btn-danger" onclick="rejectRequest(this)">رفض</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 3. إدارة الإدارات -->
+        <section id="depts-tab" class="page-section">
+            <div class="section-card">
+                <div class="card-title">إضافة إدارة جديدة</div>
+                <form onsubmit="event.preventDefault(); addDepartment();" style="display: flex; gap: 15px; align-items: flex-end;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>اسم الإدارة</label>
+                        <input type="text" id="dept-name" placeholder="مثال: إدارة العلاقات العامة والإعلام" required>
+                    </div>
+                    <button type="submit" class="btn-prime">إضافة الإدارة</button>
+                </form>
+            </div>
+
+            <div class="section-card">
+                <div class="card-title">الإدارات المتاحة لاستقبال المتدربين</div>
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>اسم الإدارة</th>
+                            <th>حالة الإدارة</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="depts-table-body">
+                        <tr>
+                            <td>1</td>
+                            <td>تقنية المعلومات</td>
+                            <td><span class="badge badge-active">نشطة</span></td>
+                            <td><button class="btn-danger" onclick="deleteRow(this)">حذف الإدارة</button></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>الإدارة المالية</td>
+                            <td><span class="badge badge-active">نشطة</span></td>
+                            <td><button class="btn-danger" onclick="deleteRow(this)">حذف الإدارة</button></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>إدارة الموارد البشرية</td>
+                            <td><span class="badge badge-active">نشطة</span></td>
+                            <td><button class="btn-danger" onclick="deleteRow(this)">حذف الإدارة</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="main-footer">
+        <div>© إمارة منطقة المدينة المنورة - جميع الحقوق محفوظة</div>
+        <div>نظام التحكم الداخلي للموظفين</div>
+    </footer>
+
+    <script>
+        function showTab(tabId, element) {
+            document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+
+            document.getElementById(tabId).classList.add('active');
+            if (element) element.classList.add('active');
+        }
+
+        function addOpportunity() {
+            const title = document.getElementById('opp-title').value;
+            const major = document.getElementById('opp-major').value;
+            const seats = document.getElementById('opp-seats').value;
+            const date = document.getElementById('opp-date').value;
+            const ann = document.getElementById('opp-announcement').value;
+
+            const tbody = document.getElementById('opps-table-body');
+            const rowCount = tbody.rows.length + 1;
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${rowCount}</td>
+                <td>${title}</td>
+                <td>${major}</td>
+                <td>${seats}</td>
+                <td>${date}</td>
+                <td><button class="btn-danger" onclick="deleteRow(this)">إلغاء الفرصة</button></td>
+            `;
+
+            tbody.appendChild(tr);
+            alert('تم إضافة الفرصة التدريبية والإعلان بنجاح!');
+            
+            document.getElementById('opp-major').value = '';
+            document.getElementById('opp-seats').value = '';
+            document.getElementById('opp-date').value = '';
+            document.getElementById('opp-announcement').value = '';
+        }
+
+        function addDepartment() {
+            const deptName = document.getElementById('dept-name').value;
+            const tbody = document.getElementById('depts-table-body');
+            const rowCount = tbody.rows.length + 1;
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${rowCount}</td>
+                <td>${deptName}</td>
+                <td><span class="badge badge-active">نشطة</span></td>
+                <td><button class="btn-danger" onclick="deleteRow(this)">حذف الإدارة</button></td>
+            `;
+
+            tbody.appendChild(tr);
+
+            const selects = document.querySelectorAll('.dept-select');
+            selects.forEach(select => {
+                const opt = document.createElement('option');
+                opt.value = deptName;
+                opt.innerText = deptName;
+                select.appendChild(opt);
+            });
+
+            alert('تمت إضافة الإدارة بنجاح!');
+            document.getElementById('dept-name').value = '';
+        }
+
+        function assignDept(btn) {
+            const row = btn.closest('tr');
+            const select = row.querySelector('.dept-select');
+            const selectedDept = select.value;
+
+            if (!selectedDept) {
+                alert('يرجى اختيار الإدارة أولاً قبل التوجيه.');
+                return;
+            }
+
+            const badgeTd = row.cells[4];
+            const actionTd = row.cells[5];
+
+            badgeTd.innerHTML = `<span class="badge badge-assigned">موجه إلى: ${selectedDept}</span>`;
+            actionTd.innerHTML = `<span style="font-size: 11px; color: var(--text-muted);">تم التوجيه لـ (${selectedDept})</span>`;
+
+            alert(`تم توجيه الطلب بنجاح إلى ${selectedDept}`);
+        }
+
+        function rejectRequest(btn) {
+            const reason = prompt('يرجى ذكر سبب رفض الطلب:');
+            if (reason !== null && reason.trim() !== '') {
+                const row = btn.closest('tr');
+                const badgeTd = row.cells[4];
+                const actionTd = row.cells[5];
+
+                badgeTd.innerHTML = `<span class="badge badge-rejected">مرفوض</span>`;
+                actionTd.innerHTML = `<span style="font-size: 11px; color: var(--danger-red);">سبب الرفض: ${reason}</span>`;
+
+                alert('تم تسجيل الرفض وإشعار المتقدم بالحالة والسبب.');
+            } else if (reason !== null) {
+                alert('يجب كتابة سبب الرفض لإكمال العملية.');
+            }
+        }
+
+        function deleteRow(btn) {
+            if (confirm('هل أنت تأكد من إجراء عملية الحذف / الإلغاء؟')) {
+                const row = btn.closest('tr');
+                row.remove();
+            }
+        }
+    </script>
+</body>
+</html>

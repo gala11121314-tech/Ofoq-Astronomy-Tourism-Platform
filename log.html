@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إمارة منطقة المدينة المنورة - تسجيل الدخول الموحد</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-emerald: #0b3b24;
+            --primary-light: #135837;
+            --accent-gold: #c5a059;
+            --nafath-green: #007a4d;
+            --bg-light: #f4f7f5;
+            --text-main: #1f2d27;
+            --text-muted: #64746d;
+            --card-shadow: 0 20px 40px rgba(11, 59, 36, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(197, 160, 89, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, rgba(11, 59, 36, 0.08) 0%, transparent 40%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            color: var(--text-main);
+        }
+
+        .gov-top-bar {
+            background: var(--primary-emerald);
+            color: rgba(255, 255, 255, 0.85);
+            padding: 8px 80px;
+            font-size: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+        }
+
+        .main-header {
+            background: #ffffff;
+            padding: 20px 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            position: relative;
+        }
+
+        .main-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-emerald) 0%, var(--accent-gold) 50%, var(--primary-emerald) 100%);
+        }
+
+        .brand-text h1 {
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--primary-emerald);
+        }
+
+        .brand-text p {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .wrapper {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .portal-card {
+            background: #ffffff;
+            width: 100%;
+            max-width: 500px;
+            border-radius: 24px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(11, 59, 36, 0.08);
+            padding: 35px 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portal-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, var(--accent-gold), var(--primary-emerald));
+        }
+
+        .card-heading {
+            text-align: center;
+            margin-bottom: 22px;
+        }
+
+        .card-heading h2 {
+            font-size: 21px;
+            font-weight: 800;
+            color: var(--primary-emerald);
+        }
+
+        .card-heading p {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+
+        /* شبكة خيارات نوع المستخدم الأربعة */
+        .roles-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .role-card {
+            border: 2px solid #d0e7db;
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            background: #fafcfb;
+            transition: all 0.25s ease;
+        }
+
+        .role-card:hover {
+            border-color: var(--primary-light);
+            background: #f0f7f4;
+        }
+
+        .role-card.selected {
+            border-color: var(--primary-emerald);
+            background: #eef7f2;
+            box-shadow: 0 4px 12px rgba(11, 59, 36, 0.1);
+        }
+
+        .role-card h4 {
+            font-size: 13.5px;
+            font-weight: 800;
+            color: var(--primary-emerald);
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+            text-align: right;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary-emerald);
+            margin-bottom: 6px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid #d0e7db;
+            border-radius: 10px;
+            font-size: 14px;
+            outline: none;
+            text-align: center;
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary-light);
+        }
+
+        .btn-nafath-prime {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #008a57 0%, #006640 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .btn-nafath-prime:hover {
+            opacity: 0.95;
+            box-shadow: 0 6px 15px rgba(0, 122, 77, 0.25);
+        }
+
+        /* نافذة محاكاة تطبيق نفاذ (الرقم والعداد) */
+        .nafath-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .nafath-box {
+            background: #fff;
+            padding: 35px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .nafath-number-display {
+            font-size: 48px;
+            font-weight: 900;
+            color: var(--nafath-green);
+            background: #e1f5ec;
+            padding: 15px;
+            border-radius: 14px;
+            margin: 20px 0;
+            letter-spacing: 5px;
+        }
+
+        .timer-text {
+            font-size: 14px;
+            color: #e74c3c;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .main-footer {
+            background: #ffffff;
+            border-top: 1px solid #e3eae6;
+            padding: 15px 80px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 12.5px;
+            color: var(--text-muted);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="gov-top-bar">
+        <div>المملكة العربية السعودية | إمارة منطقة المدينة المنورة</div>
+        <div>تسجيل الدخول الموحد (نفاذ)</div>
+    </div>
+
+    <header class="main-header">
+        <div class="brand-text">
+            <h1>إمارة منطقة المدينة المنورة</h1>
+            <p>بوابة الخدمات الإلكترونية</p>
+        </div>
+    </header>
+
+    <div class="wrapper">
+        <div class="portal-card">
+            <div class="card-heading">
+                <h2>تسجيل الدخول عبر النفاذ الوطني</h2>
+                <p>اختر صفتك الوظيفية وأدخل رقم الهوية للمتابعة</p>
+            </div>
+
+            <form onsubmit="handleNafathLogin(event)">
+                <div class="form-group" style="margin-bottom: 12px;">
+                    <label>اختر صفة تسجيل الدخول:</label>
+                </div>
+                
+                <div class="roles-grid">
+                    <div class="role-card selected" onclick="selectRole('user', this)">
+                        <h4>متدرب</h4>
+                    </div>
+                    <div class="role-card" onclick="selectRole('DD', this)">
+                        <h4>موظف إدارة</h4>
+                    </div>
+                    <div class="role-card" onclick="selectRole('T', this)">
+                        <h4>تشغيل وصيانة</h4>
+                    </div>
+                    <div class="role-card" onclick="selectRole('hr', this)">
+                        <h4>موارد بشرية</h4>
+                    </div>
+                </div>
+
+                <input type="hidden" id="selectedRole" value="user">
+
+                <div class="form-group">
+                    <label>رقم الهوية الوطنية / الإقامة</label>
+                    <input type="text" id="nationalId" placeholder="أدخل رقم الهوية (10 أرقام)" maxlength="10" required>
+                </div>
+
+                <button type="submit" class="btn-nafath-prime">متابعة التحقق عبر نفاذ</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="nafathModal" class="nafath-modal">
+        <div class="nafath-box">
+            <div style="font-weight: 800; color: var(--primary-emerald); font-size: 16px;">تطبيق نفاذ الوطني</div>
+            <p style="font-size: 13px; color: var(--text-muted); margin-top: 5px;">الرجاء اختيار الرقم الظاهر في تطبيق نفاذ في هاتفك:</p>
+            
+            <div class="nafath-number-display" id="nafathRandomNum">48</div>
+            
+            <div class="timer-text">الوقت المتبقي: <span id="countdown">60</span> ثانية</div>
+            
+            <p style="font-size: 12px; color: #555;">جارٍ انتظار تأكيد مطابقة الطلب...</p>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <div>© إمارة منطقة المدينة المنورة - جميع الحقوق محفوظة</div>
+        <div>الدعم الفني والتقني</div>
+    </footer>
+
+    <script>
+        let currentSelectedRole = 'user';
+        let timerInterval;
+
+        function selectRole(roleKey, element) {
+            document.querySelectorAll('.role-card').forEach(card => card.classList.remove('selected'));
+            element.classList.add('selected');
+            currentSelectedRole = roleKey;
+            document.getElementById('selectedRole').value = roleKey;
+        }
+
+        function handleNafathLogin(event) {
+            event.preventDefault();
+            const idValue = document.getElementById('nationalId').value;
+            
+            if(idValue.length < 10) {
+                alert('الرجاء إدخال رقم هوية صحيح مكون من 10 أرقام');
+                return;
+            }
+
+            // توليد رقم عشوائي لنفاذ بين 10 و 99
+            const randomNafath = Math.floor(Math.random() * 90) + 10;
+            document.getElementById('nafathRandomNum').innerText = randomNafath;
+
+            // إظهار نافذة نفاذ
+            document.getElementById('nafathModal').style.display = 'flex';
+
+            // تشغيل العداد التنازلي لمدة 60 ثانية (دقيقة)
+            let timeLeft = 60;
+            document.getElementById('countdown').innerText = timeLeft;
+
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('countdown').innerText = timeLeft;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    // محاكاة نجاح التأكيد التلقائي بعد العد التنازلي أو محاكاة الاستجابة الناجحة
+                    redirectToRolePage();
+                }
+            }, 1000);
+
+            // للتسهيل التجريبي: سنقوم بتحويل المستخدم تلقائياً بعد 30 ثوانٍ وهم يختبرون التطبيق، أو عند انتهاء العداد
+            setTimeout(() => {
+                clearInterval(timerInterval);
+                redirectToRolePage();
+            }, 5000);
+        }
+
+        function redirectToRolePage() {
+            document.getElementById('nafathModal').style.display = 'none';
+            
+            // التوجيه بناءً على الصفحة المطلوبة لكل دور
+            if (currentSelectedRole === 'user') {
+                window.location.href = 'user.html';
+            } else if (currentSelectedRole === 'DD') {
+                window.location.href = 'DD.html';
+            } else if (currentSelectedRole === 'T') {
+                window.location.href = 'T.html';
+            } else if (currentSelectedRole === 'hr') {
+                window.location.href = 'hr.html';
+            }
+        }
+    </script>
+</body>
+</html>

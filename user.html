@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة المستفيد - إمارة منطقة المدينة المنورة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-emerald: #0b3b24;
+            --primary-light: #135837;
+            --accent-gold: #c5a059;
+            --bg-light: #f4f7f5;
+            --text-main: #1f2d27;
+            --text-muted: #64746d;
+            --card-shadow: 0 15px 30px rgba(11, 59, 36, 0.06);
+            --form-bg: #f2f5f3;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            background-image: radial-gradient(circle at 50% 0%, rgba(197, 160, 89, 0.08) 0%, transparent 50%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: var(--text-main);
+        }
+
+        .gov-top-bar {
+            background: var(--primary-emerald);
+            color: rgba(255, 255, 255, 0.9);
+            padding: 8px 60px;
+            font-size: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+        }
+.main-header {
+    background: #ffffff;
+    padding: 20px 60px; /* زلناها من 0 إلى 20px من فوق ومن تحت، وصارت مبحبحة */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+    position: relative;
+    /* height: 110px; */ /* لو تبغى تثبت ارتفاع محدد وواسع شيل علامة التعليق من هنا */
+}
+
+        .main-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-emerald), var(--accent-gold), var(--primary-emerald));
+        }
+
+        .brand-text h1 {
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--primary-emerald);
+            padding-top: 15px;
+        }
+
+        .brand-text p {
+            font-size: 12px;
+            color: var(--text-muted);
+            padding-bottom: 15px;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 5px;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        .nav-item {
+            padding: 22px 14px;
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.25s ease;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            color: var(--primary-emerald);
+            border-bottom-color: var(--accent-gold);
+            background: #f8faf9;
+        }
+
+        .container {
+            max-width: 1050px;
+            margin: 30px auto;
+            padding: 0 20px;
+            flex-grow: 1;
+            width: 100%;
+        }
+
+        .page-section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid #e2e9e5;
+        }
+
+        .image-form-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .field-label-box {
+            flex: 1;
+            background: var(--form-bg);
+            padding: 12px 15px;
+            border-radius: 8px;
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--primary-emerald);
+            text-align: center;
+            border: 1px solid #e0e6e2;
+        }
+
+        .field-input-box {
+            flex: 1.5;
+        }
+
+        .field-input-box input, .field-input-box select {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1.5px solid #135837;
+            border-radius: 8px;
+            font-size: 13.5px;
+            outline: none;
+            background: #ffffff;
+            text-align: center;
+        }
+
+        .field-input-box input[readonly] {
+            background-color: #eef7f2;
+            color: var(--primary-emerald);
+            font-weight: 700;
+            cursor: not-allowed;
+        }
+
+        .upload-row {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 5px;
+        }
+
+        .btn-upload-custom {
+            background: #ffffff;
+            color: var(--primary-emerald);
+            border: 1.5px dashed var(--primary-light);
+            padding: 11px 20px;
+            border-radius: 8px;
+            font-size: 13.5px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 300px;
+            text-align: center;
+            transition: all 0.25s ease;
+            display: block;
+        }
+
+        .btn-upload-custom:hover {
+            background: #eef7f2;
+            border-color: var(--primary-emerald);
+        }
+
+        .declaration-box {
+            border: 1.5px solid #135837;
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+            font-size: 12.5px;
+            font-weight: 700;
+            color: #222;
+            margin: 15px 0;
+            background: #fafcfb;
+        }
+
+        .btn-submit-green {
+            background: #1b5e20;
+            color: #ffffff;
+            border: none;
+            padding: 12px 35px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .btn-action {
+            background: var(--primary-light);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 12.5px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .btn-action-gold {
+            background: var(--accent-gold);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 12.5px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .notification-banner {
+            margin-top: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .notification-label {
+            background: #1b5e20;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 13px;
+        }
+
+        .notification-content {
+            border: 1.5px solid #135837;
+            border-radius: 12px;
+            padding: 12px;
+            flex-grow: 1;
+            font-size: 12.5px;
+            font-weight: 700;
+            text-align: center;
+            background: #fff;
+        }
+
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .custom-table th, .custom-table td {
+            border: 1px solid #dce5e0;
+            padding: 12px 15px;
+            text-align: center;
+            font-size: 13.5px;
+        }
+
+        .custom-table th {
+            background: var(--primary-emerald);
+            color: white;
+            font-weight: 700;
+        }
+
+        .custom-table tr:nth-child(even) {
+            background: #f9fbf9;
+        }
+
+        .badge {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .badge-success { background: #d4edda; color: #155724; }
+        .badge-warning { background: #fff3cd; color: #856404; }
+        .badge-secondary { background: #e2e8f0; color: #475569; }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            text-align: right;
+        }
+
+        .main-footer {
+            background: #ffffff;
+            border-top: 1px solid #e3eae6;
+            padding: 15px 60px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 12.5px;
+            color: var(--text-muted);
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="gov-top-bar">
+        <div>المملكة العربية السعودية</div>
+        <div>البوابة الإلكترونية للمستفيدين</div>
+    </div>
+
+    <header class="main-header">
+        <div class="brand-text">
+            <h1>إمارة منطقة المدينة المنورة</h1>
+        </div>
+
+        <nav>
+            <ul class="nav-menu">
+                <li class="nav-item active" onclick="showTab('apply-tab', this)">تقديم طلب</li>
+                <li class="nav-item" onclick="showTab('announcements-tab', this)">الإعلانات</li>
+                <li class="nav-item" onclick="showTab('opportunities-tab', this)">الفرص المتاحة</li>
+                <li class="nav-item" onclick="showTab('reports-tab', this)">التقارير الدورية</li>
+                <li class="nav-item" onclick="showTab('evaluation-tab', this)">التقييم</li>
+                <li class="nav-item" onclick="showTab('permits-tab', this)">التصاريح</li>
+                <li class="nav-item" onclick="showTab('inquiries-tab', this)">الاستفسارات</li>
+				<!-- زر تسجيل الخروج الأنيق -->
+<button onclick="logout()" class="logout-btn">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 6px;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+    تسجيل الخروج
+</button>
+
+<style>
+    .logout-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #ffffff;
+        color: #c0392b;
+        border: 1.5px solid #fadbd8;
+        padding: 8px 16px;
+        border-radius: 10px;
+        font-family: 'Tajawal', sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+    }
+
+    .logout-btn:hover {
+        background-color: #fdf2f2;
+        border-color: #e74c3c;
+        color: #962d22;
+        box-shadow: 0 4px 12px rgba(231, 76, 60, 0.15);
+        transform: translateY(-1px);
+    }
+</style>
+
+<script>
+    function logout() {
+        localStorage.clear();
+        sessionStorage.clear();
+    window.location.href = 'log.html';
+    }
+</script>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+<!-- 1. تقديم طلب -->
+        <section id="apply-tab" class="page-section active">
+            <div class="section-card">
+                <form class="image-form-grid" onsubmit="event.preventDefault(); submitForm();">
+                    
+                    <div class="form-row">
+                        <div class="field-label-box">الهوية الوطنية</div>
+                        <div class="field-input-box"><input type="text" value="11284432399" readonly></div>
+                        <div class="field-label-box">الاسم الرباعي</div>
+                        <div class="field-input-box"><input type="text" value="غلا سامي عوده الرحيلي" readonly></div>
+                    </div>
+<!-- تاريخ الميلاد ثابت غير قابلة للتغيير -->
+                    <div class="form-row">
+                        <div class="field-label-box">تاريخ الميلاد</div>
+                        <div class="field-input-box"><input type="date" value="2005-02-13" readonly style="background-color: #f4f7f5; cursor: not-allowed; color: #555;"></div>
+                        <div class="field-label-box">الدرجة العلمية</div>
+                        <div class="field-input-box">
+                            <select required>
+                                <option value="">اختر الدرجة العلمية</option>
+                                <option value="bachelor">بكالوريوس</option>
+                                <option value="master">ماجستير</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="field-label-box">رقم جوال المتدرب</div>
+                        <div class="field-input-box"><input type="text" value="0538927643" readonly></div>
+                        <div class="field-label-box">التخصص الجامعي</div>
+                        <div class="field-input-box"><input type="text" placeholder="أدخل التخصص الجامعي" required></div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="field-label-box">البريد الإلكتروني</div>
+                        <div class="field-input-box"><input type="email" placeholder="example@domain.com" required></div>
+                        <div class="field-label-box">مدة التدريب بالأسابيع</div>
+                        <div class="field-input-box">
+                            <select required>
+                                <option value="">قائمة منسدلة بالأسابيع</option>
+                                <option>4 أسابيع</option>
+                                <option>8 أسابيع</option>
+                                <option>12 أسبوع</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="field-label-box">الجامعة</div>
+                        <div class="field-input-box"><input type="text" placeholder="اسم الجامعة" required></div>
+                        <div class="field-label-box">تاريخ بداية التدريب</div>
+                        <div class="field-input-box"><input type="date" required></div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="field-label-box">بيانات مشرف التدريب</div>
+                        <div class="field-input-box"><input type="text" placeholder="اسم المشرف الأكاديمي" required></div>
+                        <div class="field-label-box">جوال المشرف التدريبي</div>
+                        <div class="field-input-box"><input type="tel" placeholder="05XXXXXXXX" required></div>
+                    </div>
+
+                    <div class="upload-row">
+                        <input type="file" id="university-letter" style="display: none;" onchange="updateFileName(this, 'btn-letter-text')">
+                        <label for="university-letter" class="btn-upload-custom" id="btn-letter-text">إرفاق الخطاب الجامعي</label>
+                    </div>
+                    <div class="upload-row">
+                        <input type="file" id="academic-record" style="display: none;" onchange="updateFileName(this, 'btn-record-text')">
+                        <label for="academic-record" class="btn-upload-custom" id="btn-record-text">إرفاق السجل الأكاديمي</label>
+                    </div>
+
+                    <div style="display: flex; gap: 20px; align-items: center; margin-top: 10px;">
+                        <div class="declaration-box" style="flex: 1;">
+                            اقر انا الموضحة بياناتي أعلاه بصحة البيانات المسجلة، وأن لا تتحمل الإمارة أي التزامات مالية للمتدرب
+                        </div>
+                        <button type="submit" class="btn-submit-green">ارسال الطلب</button>
+                    </div>
+
+                    <div class="notification-banner" id="success-banner" style="display: none;">
+                        <div class="notification-content">
+                            " تم ارسال طلبكم برقم <span id="req-num">5245</span> سيتم إبلاغكم برسالة نصية في حال قبول أو رفض الطلب"
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </section>
+        <!-- 2. الإعلانات -->
+        <section id="announcements-tab" class="page-section">
+            <div class="section-card">
+                <h2 style="color: var(--primary-emerald); font-size: 18px; margin-bottom: 20px;">الإعلانات والأخبار</h2>
+                
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    <div style="background: #eef7f2; border-right: 4px solid var(--primary-emerald); padding: 18px; border-radius: 8px;">
+                        <h3 style="font-size: 15px; color: var(--primary-emerald);">فتح باب استقبال طلبات التدريب للفصل الدراسي القادم</h3>
+                        <p style="font-size: 13px; color: #444; margin-top: 6px;">
+                            تعلن إمارة منطقة المدينة المنورة عن بدء استقبال طلبات التقديم على برنامج التدريب الميداني عبر البوابة الإلكترونية.
+                        </p>
+                        <span style="font-size: 11px; color: #777; margin-top: 10px; display: block;">تاريخ الإعلان: 30 يوليو 2026</span>
+                    </div>
+
+                    <div style="background: #fdfaf3; border-right: 4px solid var(--accent-gold); padding: 18px; border-radius: 8px;">
+                        <h3 style="font-size: 15px; color: #856404;">متابعة حالة الطلب وإشعارات القبول</h3>
+                        <p style="font-size: 13px; color: #444; margin-top: 6px;">
+                            يرجى من جميع المتقدمين متابعة البوابة والرسائل النصية لاستكمال الإجراءات المتبقية فور وصول إشعار القبول.
+                        </p>
+                        <span style="font-size: 11px; color: #777; margin-top: 10px; display: block;">تاريخ الإعلان: 29 يوليو 2026</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. الفرص المتاحة -->
+        <section id="opportunities-tab" class="page-section">
+            <div class="section-card">
+                <h2 style="color: var(--primary-emerald); font-size: 18px; margin-bottom: 15px;">الفرص التدريبية المتاحة</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px;">
+                    
+                    <div style="border: 1px solid #dce5e0; padding: 18px; border-radius: 10px; background: #fafcfb; text-align: center;">
+                        <h4 style="color: var(--primary-emerald); margin-bottom: 10px;">تقنية المعلومات</h4>
+                        <button onclick="showTab('apply-tab', document.querySelectorAll('.nav-item')[0])" class="btn-action-gold">تقديم الآن</button>
+                    </div>
+
+                    <div style="border: 1px solid #dce5e0; padding: 18px; border-radius: 10px; background: #fafcfb; text-align: center;">
+                        <h4 style="color: var(--primary-emerald); margin-bottom: 10px;">نظم المعلومات الإدارية</h4>
+                        <button onclick="showTab('apply-tab', document.querySelectorAll('.nav-item')[0])" class="btn-action-gold">تقديم الآن</button>
+                    </div>
+
+                    <div style="border: 1px solid #dce5e0; padding: 18px; border-radius: 10px; background: #fafcfb; text-align: center;">
+                        <h4 style="color: var(--primary-emerald); margin-bottom: 10px;">المحاسبة</h4>
+                        <button onclick="showTab('apply-tab', document.querySelectorAll('.nav-item')[0])" class="btn-action-gold">تقديم الآن</button>
+                    </div>
+
+                    <div style="border: 1px solid #dce5e0; padding: 18px; border-radius: 10px; background: #fafcfb; text-align: center;">
+                        <h4 style="color: var(--primary-emerald); margin-bottom: 10px;">إدارة الأعمال</h4>
+                        <button onclick="showTab('apply-tab', document.querySelectorAll('.nav-item')[0])" class="btn-action-gold">تقديم الآن</button>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. التقارير الدورية -->
+        <section id="reports-tab" class="page-section">
+            <div class="section-card">
+                <h2 style="color: var(--primary-emerald); font-size: 18px; margin-bottom: 15px;">التقارير الدورية</h2>
+                <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 15px;">رفع ومتابعة تقارير الأداء الأسبوعية الخاصة بالتدريب:</p>
+                
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>الأسبوع</th>
+                            <th>رقم الأسبوع</th>
+                            <th>التقرير المرفق</th>
+                            <th>حالة التقرير</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>الأسبوع الأول</td>
+                            <td>#01</td>
+                            <td><span style="color: var(--primary-emerald); font-weight: 700;">تم إرفاق التقرير</span></td>
+                            <td><span class="badge badge-success">معتمد من الإدارة</span></td>
+                        </tr>
+                        <tr>
+                            <td>الأسبوع الثاني</td>
+                            <td>#02</td>
+                            <td><span style="color: var(--primary-emerald); font-weight: 700;">تم إرفاق التقرير</span></td>
+                            <td><span class="badge badge-success">معتمد من الإدارة</span></td>
+                        </tr>
+                        <tr>
+                            <td>الأسبوع الثالث</td>
+                            <td>#03</td>
+                            <td><span style="color: var(--primary-emerald); font-weight: 700;">تم إرفاق التقرير</span></td>
+                            <td><span class="badge badge-success">معتمد من الإدارة</span></td>
+                        </tr>
+                        <tr>
+                            <td>الأسبوع الرابع</td>
+                            <td>#04</td>
+                            <td><span style="color: var(--primary-emerald); font-weight: 700;">تم إرفاق التقرير</span></td>
+                            <td><span class="badge badge-success">معتمد من الإدارة</span></td>
+                        </tr>
+                        <tr>
+                            <td>الأسبوع الخامس</td>
+                            <td>#05</td>
+                            <td><span style="color: var(--primary-emerald); font-weight: 700;">تم إرفاق التقرير</span></td>
+                            <td><span class="badge badge-success">معتمد من الإدارة</span></td>
+                        </tr>
+                        <tr>
+                            <td>الأسبوع السادس</td>
+                            <td>#06</td>
+                            <td><span style="color: var(--primary-emerald); font-weight: 700;">تم إرفاق التقرير</span></td>
+                            <td><span class="badge badge-warning">قيد المراجعة</span></td>
+                        </tr>
+                        <tr>
+                            <td>الأسبوع السابع</td>
+                            <td>#07</td>
+                            <td>
+                                <input type="file" id="report-week-7" style="display: none;" onchange="handleReportUpload(this, 'status-7', 'تم رفع تقرير الأسبوع السابع بنجاح')">
+                                <label for="report-week-7" class="btn-action-gold" style="cursor: pointer;">رفع التقرير</label>
+                            </td>
+                            <td><span id="status-7" class="badge badge-secondary">لم يتم الرفع</span></td>
+                        </tr>
+                        <tr>
+                            <td>الأسبوع الثامن</td>
+                            <td>#08</td>
+                            <td>
+                                <input type="file" id="report-week-8" style="display: none;" onchange="handleReportUpload(this, 'status-8', 'تم رفع تقرير الأسبوع الثامن بنجاح')">
+                                <label for="report-week-8" class="btn-action-gold" style="cursor: pointer;">رفع التقرير</label>
+                            </td>
+                            <td><span id="status-8" class="badge badge-secondary">لم يتم الرفع</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 5. التقييم النهائي (المحدث: تقييم المتدرب للإدارة وتقييم الإدارة للطالب) -->
+        <section id="evaluation-tab" class="page-section">
+            <div class="section-card">
+                <h2 style="color: var(--primary-emerald); font-size: 18px; margin-bottom: 15px;">تقييم نهاية التدريب</h2>
+                <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 15px;">تعبئة وإرسال استمارة تقييم المتدرب للإدارة، والاطلاع على تقييم الإدارة للمتدرب:</p>
+
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>البند</th>
+                            <th>الإجراء / النموذج</th>
+                            <th>الحالة</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="font-weight: 700;">تقييم المتدرب للإدارة</td>
+                            <td>
+                                <a id="studentEvalBtnLink" href="javascript:void(0);" onclick="openEvalModal()" style="color: var(--primary-light); font-weight: 700; text-decoration: underline;">تعبئة استمارة تقييم الإدارة</a>
+                            </td>
+                            <td><span class="badge badge-warning" id="student-eval-status">لم يتم الإرسال بعد</span></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 700;">تقييم الإدارة للمتدرب</td>
+                            <td>
+                                <button class="btn-action-gold" onclick="openAdminEvalModal()">معاينة تقييم الإدارة للطالب</button>
+                            </td>
+                            <td><span class="badge badge-success">تم التقييم </span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 6. التصاريح -->
+        <section id="permits-tab" class="page-section">
+            <div class="section-card">
+                <h2 style="color: var(--primary-emerald); font-size: 18px; margin-bottom: 15px;">التصاريح المصدرة</h2>
+                <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 15px;">الاطلاع على التصاريح الرسمية الخاصة بالمتدربة:</p>
+
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>نوع التصريح</th>
+                            <th>رقم التصريح</th>
+                            <th>تاريخ الإصدار</th>
+                            <th>حالة التصريح</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="font-weight: 700;">تصريح دخول إمارة منطقة المدينة المنورة</td>
+                            <td>PRMT-2026-9842</td>
+                            <td>2026/06/01</td>
+                            <td><span class="badge badge-success">ساري المفعول</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 7. الاستفسارات -->
+        <section id="inquiries-tab" class="page-section">
+            <div class="section-card">
+                <h2 style="color: var(--primary-emerald); font-size: 18px; margin-bottom: 15px;">الاستفسارات والملاحظات</h2>
+                
+                <div style="background: #eef7f2; border: 1px solid #135837; border-radius: 8px; padding: 15px; margin-bottom: 20px;">
+                    <h3 style="font-size: 14.5px; color: var(--primary-emerald); margin-bottom: 5px;">متى ساعات الدوام الرسمي؟</h3>
+                    <p style="font-size: 13px; color: var(--text-main);">من الأحد إلى الخميس، تبدأ ساعات العمل الرسمية من الساعة 07:30 صباحاً وحتى 02:30 ظهراً.</p>
+                </div>
+
+                <form onsubmit="event.preventDefault(); alert('تم إرسال استفسارك بنجاح');">
+                    <input type="text" placeholder="عنوان الاستفسار الجديد" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 6px;" required>
+                    <textarea rows="3" placeholder="محتوى الاستفسار الجديد..." style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 6px;" required></textarea>
+                    <button type="submit" class="btn-submit-green" style="padding: 8px 20px;">إرسال الاستفسار</button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- نافذة منبثقة: تقييم المتدرب للإدارة (بالعناصر التابعة لتقييم المتدرب للجهة) -->
+    <div id="evalModal" class="modal-overlay">
+        <div class="modal-content">
+            <h3 style="color: var(--primary-emerald); margin-bottom: 10px; text-align: center;">جامعة طيبة - كلية إدارة الأعمال</h3>
+            <h4 style="color: var(--accent-gold); margin-bottom: 20px; text-align: center;">استمارة تقييم المتدرب لجهة التدريب (الإدارة)</h4>
+            <hr style="margin-bottom: 15px; border: 0; border-top: 1px solid #ddd;">
+            <p style="font-size: 13px; line-height: 1.8; margin-bottom: 15px;">
+                <strong>جهة التدريب:</strong> إمارة منطقة المدينة المنورة<br>
+                <strong>اسم المتدرب:</strong> غلا الرحيلي<br>
+                <strong>التخصص:</strong> نظم المعلومات الإدارية<br>
+                <strong>المشرف بجهة التدريب:</strong> عبدالرحمن السحيمي
+            </p>
+            <table class="custom-table" style="font-size: 12px; margin-bottom: 20px;">
+                <thead>
+                    <tr>
+                        <th>م</th>
+                        <th>عناصر التقييم</th>
+                        <th>ممتاز (4)</th>
+                        <th>جيد جداً (3)</th>
+                        <th>جيد (2)</th>
+                        <th>مقبول (1)</th>
+                        <th>ضعيف (0)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>جودة البرنامج التدريبي وتحقيق أهداف التدريب</td><td><input type="radio" name="eq1" checked></td><td><input type="radio" name="eq1"></td><td><input type="radio" name="eq1"></td><td><input type="radio" name="eq1"></td><td><input type="radio" name="eq1"></td></tr>
+                    <tr><td>2</td><td>تعاون المشرف في جهة التدريب وتقديم الدعم والإرشاد</td><td><input type="radio" name="eq2" checked></td><td><input type="radio" name="eq2"></td><td><input type="radio" name="eq2"></td><td><input type="radio" name="eq2"></td><td><input type="radio" name="eq2"></td></tr>
+                    <tr><td>3</td><td>إتاحة مهام عملية مرتبطة بالتخصص</td><td><input type="radio" name="eq3" checked></td><td><input type="radio" name="eq3"></td><td><input type="radio" name="eq3"></td><td><input type="radio" name="eq3"></td><td><input type="radio" name="eq3"></td></tr>
+                    <tr><td>4</td><td>توفير بيئة عمل مناسبة ومحفزة للتدريب</td><td><input type="radio" name="eq4" checked></td><td><input type="radio" name="eq4"></td><td><input type="radio" name="eq4"></td><td><input type="radio" name="eq4"></td><td><input type="radio" name="eq4"></td></tr>
+                    <tr><td>5</td><td>الالتزام بتنفيذ خطة التدريب ومواعيده</td><td><input type="radio" name="eq5" checked></td><td><input type="radio" name="eq5"></td><td><input type="radio" name="eq5"></td><td><input type="radio" name="eq5"></td><td><input type="radio" name="eq5"></td></tr>
+                    <tr><td>6</td><td>إتاحة الفرصة لاكتساب مهارات وخبرات جديدة</td><td><input type="radio" name="eq6" checked></td><td><input type="radio" name="eq6"></td><td><input type="radio" name="eq6"></td><td><input type="radio" name="eq6"></td><td><input type="radio" name="eq6"></td></tr>
+                    <tr><td>7</td><td>مستوى الرضا العام عن تجربة التدريب في الجهة</td><td><input type="radio" name="eq7" checked></td><td><input type="radio" name="eq7"></td><td><input type="radio" name="eq7"></td><td><input type="radio" name="eq7"></td><td><input type="radio" name="eq7"></td></tr>
+                </tbody>
+            </table>
+            <div style="text-align: center; display: flex; gap: 10px; justify-content: center;">
+                <button class="btn-action" onclick="saveStudentEval()" style="background: var(--primary-light);">حفظ وإرسال التقييم</button>
+                <button class="btn-action" style="background: #7f8c8d;" onclick="closeEvalModal()">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة منبثقة: تقييم الإدارة للطالب -->
+    <div id="adminEvalModal" class="modal-overlay">
+        <div class="modal-content">
+            <h3 style="color: var(--primary-emerald); margin-bottom: 10px; text-align: center;">جامعة طيبة - كلية إدارة الأعمال</h3>
+            <h4 id="adminEvalTitle" style="color: var(--accent-gold); margin-bottom: 20px; text-align: center;">استمارة تقييم الطالب من قبل جهة التدريب (الإدارة)</h4>
+            <hr style="margin-bottom: 15px; border: 0; border-top: 1px solid #ddd;">
+            <p style="font-size: 13px; line-height: 1.8; margin-bottom: 15px;">
+                <strong>جهة التدريب:</strong> إمارة منطقة المدينة المنورة<br>
+                <strong>اسم المتدرب:</strong> غلا الرحيلي<br>
+                <strong>التخصص:</strong> نظم المعلومات الإدارية<br>
+                <strong>المشرف بجهة التدريب:</strong> عبدالرحمن السحيمي
+            </p>
+            <table class="custom-table" style="font-size: 12px; margin-bottom: 20px;">
+                <thead>
+                    <tr>
+                        <th>م</th>
+                        <th>عناصر التقييم الميداني للطالب</th>
+                        <th>ممتاز</th>
+                        <th>جيد جداً</th>
+                        <th>جيد</th>
+                        <th>مقبول</th>
+                        <th>ضعيف</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>الالتزام بمواعيد الحضور والانصراف وقواعد العمل</td>
+                        <td><input type="radio" name="q1" checked disabled></td><td><input type="radio" name="q1" disabled></td><td><input type="radio" name="q1" disabled></td><td><input type="radio" name="q1" disabled></td><td><input type="radio" name="q1" disabled></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>القدرة على استيعاب وتنفيذ المهام المطلوبة بدقة</td>
+                        <td><input type="radio" name="q2" checked disabled></td><td><input type="radio" name="q2" disabled></td><td><input type="radio" name="q2" disabled></td><td><input type="radio" name="q2" disabled></td><td><input type="radio" name="q2" disabled></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>المبادرة والتعاون الفعال مع فريق العمل بالقسم</td>
+                        <td><input type="radio" name="q3" checked disabled></td><td><input type="radio" name="q3" disabled></td><td><input type="radio" name="q3" disabled></td><td><input type="radio" name="q3" disabled></td><td><input type="radio" name="q3" disabled></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>المهارات الفنية والتخصصية في مجال نظم المعلومات الإدارية</td>
+                        <td><input type="radio" name="q4" checked disabled></td><td><input type="radio" name="q4" disabled></td><td><input type="radio" name="q4" disabled></td><td><input type="radio" name="q4" disabled></td><td><input type="radio" name="q4" disabled></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>جودة إعداد التقارير الدورية وتسليمها في وقتها</td>
+                        <td><input type="radio" name="q5" checked disabled></td><td><input type="radio" name="q5" disabled></td><td><input type="radio" name="q5" disabled></td><td><input type="radio" name="q5" disabled></td><td><input type="radio" name="q5" disabled></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div style="text-align: center;">
+                <button class="btn-action" onclick="closeAdminEvalModal()">إغلاق المعاينة</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <div>© إمارة منطقة المدينة المنورة - جميع الحقوق محفوظة</div>
+        <div>البوابة الإلكترونية الموحدة</div>
+    </footer>
+
+    <script>
+        function showTab(tabId, element) {
+            document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+
+            document.getElementById(tabId).classList.add('active');
+            if(element) element.classList.add('active');
+        }
+
+        function submitForm() {
+            document.getElementById('success-banner').style.display = 'flex';
+        }
+
+        function updateFileName(input, labelId) {
+            if (input.files && input.files[0]) {
+                document.getElementById(labelId).innerText = "تم الرفع: " + input.files[0].name;
+            }
+        }
+
+        function handleReportUpload(input, statusId, alertMessage) {
+            if (input.files && input.files[0]) {
+                const tdCell = input.parentElement;
+                tdCell.innerHTML = '<span style="color: var(--primary-emerald); font-weight: 700;">تم إرفاق التقرير</span>';
+                
+                const badgeSpan = document.getElementById(statusId);
+                badgeSpan.className = "badge badge-warning";
+                badgeSpan.innerText = "قيد المراجعة";
+
+                alert(alertMessage);
+            }
+        }
+
+        // تفاعلات تقييم المتدرب للإدارة
+        function openEvalModal() {
+            document.getElementById('evalModal').style.display = 'flex';
+        }
+        function closeEvalModal() {
+            document.getElementById('evalModal').style.display = 'none';
+        }
+        function saveStudentEval() {
+            closeEvalModal();
+            const badge = document.getElementById('student-eval-status');
+            badge.className = "badge badge-success";
+            badge.innerText = "تم التقييم ";
+            document.getElementById('studentEvalBtnLink').innerText = "استعراض تقييم الإدارة المرسل";
+            alert('تم حفظ وإرسال استمارة تقييم الإدارة بنجاح.');
+        }
+
+        // تفاعلات تقييم الإدارة للطالب
+        function openAdminEvalModal() {
+            document.getElementById('adminEvalModal').style.display = 'flex';
+        }
+        function closeAdminEvalModal() {
+            document.getElementById('adminEvalModal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
